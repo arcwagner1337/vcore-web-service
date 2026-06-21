@@ -1,0 +1,37 @@
+version: '3.8'
+
+
+
+services:
+  vcore_db:
+    image: postgres:15
+    container_name: vcore_db
+    env_file:
+      - ./server/vcoretest/vcoretest/.env
+
+    ports:
+      - "127.0.0.1:5439:5432" 
+
+  vcore_backend:
+    build: ./server/vcoretest/vcoretest
+    env_file:
+      - ./server/vcoretest/vcoretest/.env  
+    container_name: vcore_backend
+    depends_on:
+      - vcore_db
+
+  vcore_frontend:
+    build: ./frontend/void-project
+    container_name: vcore_frontend
+    
+
+  vcore_gateway:
+    image: nginx:alpine
+    container_name: vcore_gateway
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80"
+    depends_on:
+      - vcore_frontend
+      - vcore_backend

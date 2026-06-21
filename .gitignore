@@ -1,0 +1,11 @@
+.vs/
+.vscode/
+bin/
+obj/
+out/
+build/
+snap/
+*.user
+*.suo
+node_modules/
+.env

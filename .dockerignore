@@ -1,0 +1,11 @@
+**/.vs
+**/bin
+**/obj
+**/build
+**/.git
+**/.cache
+server/vcoretest/vcoretest/build
+server/vcoretest/vcoretest/x64
+server/vcoretest/vcoretest/cmake-build-debug
+frontend/void-project/node_modules
+frontend/void-project/dist
