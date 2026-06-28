@@ -9,8 +9,8 @@ services:
     env_file:
       - ./server/vcoretest/vcoretest/.env
 
-    ports:
-      - "127.0.0.1:5439:5432" 
+    # ports:
+    #   - "127.0.0.1:5439:5432" 
 
   vcore_backend:
     build: ./server/vcoretest/vcoretest
