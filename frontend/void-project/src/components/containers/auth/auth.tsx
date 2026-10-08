@@ -188,11 +188,11 @@ export default function AuthModal({ onClose, onLogin }: any) {
 
             <div className={`relative bg-[#070707] border transition-all duration-500 
                 ${authError ? 'border-red-500 animate-shake' : 'border-cyan-500/20'}
-                ${mode === 'register' ? 'max-w-[550px] w-full' : 'max-w-[380px] w-full'}`}>
+                ${mode === 'register' ? 'max-w-[550px] w-full' : 'max-w-[380px] w-full'} max-h-[92dvh] overflow-y-auto`}>
 
                 <div className={`h-1 w-full transition-colors duration-500 ${authError ? 'bg-red-500' : 'bg-cyan-500'}`} />
 
-                <form onSubmit={handleSubmit} className="p-10 pb-20 relative z-10">
+                <form onSubmit={handleSubmit} className="p-6 md:p-10 pb-20 relative z-10">
                     <button type="button" onClick={onClose} className="absolute top-4 right-5 text-white/20 hover:text-white text-xs font-mono z-50 transition-colors">X</button>
 
                     <h2 className="text-3xl font-black italic uppercase text-white mb-8">
@@ -211,7 +211,7 @@ export default function AuthModal({ onClose, onLogin }: any) {
                                     <input
                                         value={identifier}
                                         onChange={handleInputChange('login')}
-                                        className="w-full bg-white/[0.02] border border-white/5 p-4 text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
+                                        className="w-full bg-white/[0.02] border border-white/5 p-4 text-base md:text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
                                         placeholder="ENTER_RECOVERY_EMAIL"
                                     />
                                 ) : (
@@ -220,14 +220,14 @@ export default function AuthModal({ onClose, onLogin }: any) {
                                         <input
                                             value={resetCode}
                                             onChange={(e) => setResetCode(e.target.value.replace(/\D/g, '').substring(0, 6))}
-                                            className="w-full bg-white/[0.02] border border-cyan-500/30 p-4 text-xs font-bold text-cyan-400 outline-none"
+                                            className="w-full bg-white/[0.02] border border-cyan-500/30 p-4 text-base md:text-xs font-bold text-cyan-400 outline-none"
                                             placeholder="VERIFICATION_CODE"
                                         />
                                         <input
                                             type="password"
                                             value={accessKey}
                                             onChange={handleInputChange('pass')}
-                                            className={`w-full bg-white/[0.02] border p-4 text-xs font-bold text-white outline-none transition-colors 
+                                            className={`w-full bg-white/[0.02] border p-4 text-base md:text-xs font-bold text-white outline-none transition-colors 
                                                 ${accessKey !== confirmAccessKey && confirmAccessKey ? 'border-red-500/50' : 'border-white/5 focus:border-cyan-500/50'}`}
                                             placeholder="NEW_ACCESS_KEY"
                                         />
@@ -235,7 +235,7 @@ export default function AuthModal({ onClose, onLogin }: any) {
                                             type="password"
                                             value={confirmAccessKey}
                                             onChange={handleInputChange('pass2')}
-                                            className={`w-full bg-white/[0.02] border p-4 text-xs font-bold text-white outline-none transition-colors 
+                                            className={`w-full bg-white/[0.02] border p-4 text-base md:text-xs font-bold text-white outline-none transition-colors 
                                                 ${accessKey !== confirmAccessKey && confirmAccessKey ? 'border-red-500/50' : 'border-white/5 focus:border-cyan-500/50'}`}
                                             placeholder="CONFIRM_NEW_KEY"
                                         />
@@ -248,7 +248,7 @@ export default function AuthModal({ onClose, onLogin }: any) {
                                 <input
                                     value={identifier}
                                     onChange={handleInputChange('login')}
-                                    className="w-full bg-white/[0.02] border border-white/5 p-4 text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
+                                    className="w-full bg-white/[0.02] border border-white/5 p-4 text-base md:text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
                                     placeholder={mode === 'register' ? "LOGIN" : "LOGIN/EMAIL"}
                                 />
                             ):(<></>)}
@@ -258,14 +258,14 @@ export default function AuthModal({ onClose, onLogin }: any) {
                                             <input
                                                 value={email}
                                                 onChange={handleInputChange('email')}
-                                                className="w-full bg-white/[0.02] border border-white/5 p-4 text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
+                                                className="w-full bg-white/[0.02] border border-white/5 p-4 text-base md:text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
                                                 placeholder="EMAIL_ADDRESS"
                                             />
                                         ) : (
                                             <input
                                                 value={registerCode}
                                                 onChange={(e) => setRegisterCode(e.target.value.replace(/\D/g, '').substring(0, 6))}
-                                                className="w-full bg-white/[0.02] border border-cyan-500/30 p-4 text-xs font-bold text-cyan-400 outline-none"
+                                                className="w-full bg-white/[0.02] border border-cyan-500/30 p-4 text-base md:text-xs font-bold text-cyan-400 outline-none"
                                                 placeholder="ENTER_VERIFICATION_CODE"
                                             />
                                         )}
@@ -276,7 +276,7 @@ export default function AuthModal({ onClose, onLogin }: any) {
                                     type="password"
                                     value={accessKey}
                                     onChange={handleInputChange('pass')}
-                                    className="w-full bg-white/[0.02] border border-white/5 p-4 text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
+                                    className="w-full bg-white/[0.02] border border-white/5 p-4 text-base md:text-xs font-bold text-white focus:border-cyan-500/50 outline-none"
                                     placeholder="ACCESS_KEY"
                                 />):(<></>)}
                                 {mode === 'login' && showResetLink && (

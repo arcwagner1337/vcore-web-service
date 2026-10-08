@@ -12,7 +12,7 @@ const ScreenshotCard = ({ src, title }: any) => (
         className="w-full grayscale-[50%] group-hover:grayscale-0 transition-all duration-500 scale-[1.01] group-hover:scale-105"
       />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-6">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity flex flex-col justify-end p-3 md:p-6">
         <h4 className="text-lg font-black italic uppercase tracking-tighter text-white">{title}</h4>
         <p className="text-[9px] font-bold text-cyan-400 uppercase tracking-widest mt-1">Direct Memory Access View</p>
       </div>
