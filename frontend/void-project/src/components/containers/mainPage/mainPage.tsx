@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
+import { useState, useEffect, useRef, type Dispatch, type SetStateAction } from 'react';
 
 import Sidebar from '../../small/sidebar';
 import Footer from '../../small/footer';
@@ -40,7 +40,10 @@ export const fetchMe = async (setUser: any) => {
 
 export default function MainPage() {
   const [tab, setTab] = useState('HOME');
-  const [performanceMode, setPerformanceMode] = useState(false);
+  
+   const [performanceMode, setPerformanceMode] = useState(
+     () => window.matchMedia('(max-width: 767px)').matches
+   );
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isPurchaseOpen, setIsPurchaseOpen] = useState(false);
   const [user, setUser] = useState(null);
@@ -140,7 +143,8 @@ export default function MainPage() {
   return (
 
 
-    <div className="flex h-screen overflow-hidden bg-[#07090d] text-white">
+    
+    <div className="flex flex-col-reverse md:flex-row h-dvh overflow-hidden bg-[#07090d] text-white">
       <Sidebar
         active={tab}
         setActive={handleTabChange} 
@@ -161,7 +165,9 @@ export default function MainPage() {
 
           {tab === 'PROFILE' ? (
            
-            <div className="max-w-6xl mx-auto p-20">
+            
+            <div className="max-w-6xl mx-auto p-4 md:p-20">
+
               <ProfileSection
                 user={user}
                 isExternalClosing={isProfileClosing} 
@@ -178,7 +184,8 @@ export default function MainPage() {
           ) : (
             <>
               <div ref={homeRef}>
-                <section className="relative h-[80vh] flex flex-col items-center justify-center border-b border-white/5 overflow-hidden group/hero bg-[#07090d]">
+                
+                <section className="relative h-[60dvh] md:h-[80vh] flex flex-col items-center justify-center border-b border-white/5 overflow-hidden group/hero bg-[#07090d]">
 
       
                   <div
@@ -200,12 +207,17 @@ export default function MainPage() {
 
                  
                   <div className="relative z-20 text-center space-y-4">
-                    <h1 className="text-8xl font-black italic uppercase tracking-tighter leading-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+                    
+                    <h1 className="text-5xl sm:text-7xl md:text-8xl font-black italic uppercase tracking-tighter leading-none drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+
+
                       VOID<span className="text-cyan-400">CORE</span>
                     </h1>
                     <div className="flex items-center justify-center gap-4">
                       <div className="h-[2px] w-12 bg-cyan-500/50" />
-                      <p className="text-[12px] font-black uppercase tracking-[0.6em] text-white/80">Kernel Drivers</p>
+                      {/* <p className="text-[12px] font-black uppercase tracking-[0.6em] text-white/80">Kernel Drivers</p>  */}
+                      <p className="text-[10px] md:text-[12px] font-black uppercase tracking-[0.3em] md:tracking-[0.6em] text-white/80">Kernel Drivers</p>
+
                       <div className="h-[2px] w-12 bg-cyan-500/50" />
                     </div>
                   </div>
@@ -216,7 +228,9 @@ export default function MainPage() {
               </div>
 
            
-              <div className="max-w-8xl mx-auto px-12 space-y-10 relative z-20">
+             
+              <div className="mx-auto px-4 md:px-12 space-y-10 relative z-20">
+
 
 
 
@@ -251,11 +265,13 @@ export default function MainPage() {
                 <div ref={previewRef}>
                   <section className="space-y-8">
                     <div className="flex items-center gap-4">
-                      <h2 className="text-xs font-black uppercase tracking-[0.5em] text-white/30">Interface Preview</h2>
+                      <h2 className="text-xs font-black uppercase tracking-[0.25em] md:tracking-[0.5em] text-white/30">Interface Preview</h2>
                       <div className="h-[1px] w-full bg-white/5" />
                     </div>
 
-                    <div className="grid grid-cols-2 gap-10">
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+
                      
                       <ScreenshotCard src={new URL('../../../assets/scrn1.png', import.meta.url).href} title="Settings Menu" />
                       <ScreenshotCard src={new URL('../../../assets/scrn2.png', import.meta.url).href} title="User Profile" />
@@ -265,7 +281,7 @@ export default function MainPage() {
                 <div ref={infoRef}>
                   <section className="space-y-8">
                     <div className="flex items-center gap-4 mb-10">
-                      <h2 className="text-xs font-black uppercase tracking-[0.5em] text-white/30 whitespace-nowrap">Core Philosophy</h2>
+                      <h2 className="text-xs font-black uppercase tracking-[0.25em] md:tracking-[0.5em] text-white/30 whitespace-nowrap">Core Philosophy</h2>
                       <div className="h-[1px] w-full bg-white/5" />
                     </div>
                     <ManifestSection />
@@ -274,7 +290,7 @@ export default function MainPage() {
                 <div ref={guideRef}>
                   <section className="space-y-8">
                     <div className="flex items-center gap-4 mb-10">
-                      <h2 className="text-xs font-black uppercase tracking-[0.5em] text-white/30 whitespace-nowrap">Operational Guide</h2>
+                      <h2 className="text-xs font-black uppercase tracking-[0.25em] md:tracking-[0.5em] text-white/30 whitespace-nowrap">Operational Guide</h2>
                       <div className="h-[1px] w-full bg-white/5" />
                     </div>
                     <GuideSection />
@@ -292,7 +308,7 @@ export default function MainPage() {
                         backgroundPosition: 'center',
 
                       }}>
-                      <h2 className="text-xs font-black uppercase tracking-[0.5em] text-white/30 whitespace-nowrap">Access Licenses</h2>
+                      <h2 className="text-xs font-black uppercase tracking-[0.25em] md:tracking-[0.5em] text-white/30 whitespace-nowrap">Access Licenses</h2>
                       <div className="h-[1px] w-full bg-white/5" />
                     </div>
                     <PriceCarousel user={user}

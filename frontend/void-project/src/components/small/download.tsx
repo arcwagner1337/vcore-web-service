@@ -30,7 +30,7 @@ const RadarBgr = () => (
 
 const DownloadSection = () => (
  
-    <section className="relative pt-16 pb-80 bg-[#07090d] border-t border-white/5 overflow-hidden group/down flex items-center justify-center">
+    <section className="relative pt-10 pb-32 md:pt-16 md:pb-80 bg-[#07090d] border-t border-white/5 overflow-hidden group/down flex items-center justify-center">
 
         <div className="absolute inset-0 opacity-[0.03] mix-blend-screen transition-opacity duration-1000 group-hover/down:opacity-[0.07]" />
 
@@ -40,22 +40,22 @@ const DownloadSection = () => (
         </div>
 
        
-        <div className="max-w-4xl mx-auto px-6 relative z-10 mt-20">
+        <div className="max-w-4xl mx-auto px-4 md:px-6 relative z-10 mt-6 md:mt-20">
             <div className="flex flex-col items-center">
           
                 <div className="flex items-center gap-4 mb-8">
-                    <div className="h-[1px] w-24 bg-gradient-to-l from-cyan-500 to-transparent" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.8em] text-cyan-500/60 animate-pulse">
+                    <div className="h-[1px] w-8 md:w-24 shrink-0 bg-gradient-to-l from-cyan-500 to-transparent" />
+                    <span className="text-[10px] font-black uppercase text-center tracking-[0.3em] md:tracking-[0.8em] text-cyan-500/60 animate-pulse">
                         Final Deployment Phase
                     </span>
-                    <div className="h-[1px] w-24 bg-gradient-to-r from-cyan-500 to-transparent" />
+                    <div className="h-[1px] w-8 md:w-24 shrink-0 bg-gradient-to-r from-cyan-500 to-transparent" />
                 </div>
             
                 <div className="relative p-2 border border-white/5 bg-black/40 group/btn-container">
                     <div className="absolute -top-[1px] -left-[1px] w-4 h-4 border-t-2 border-l-2 border-cyan-500 shadow-[0_0_15px_#22d3ee]" />
                     <div className="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b-2 border-r-2 border-cyan-500 shadow-[0_0_15px_#22d3ee]" />
 
-                    <button className="relative px-20 py-10 bg-black border border-white/5 hover:border-cyan-500/50 transition-all active:scale-90 duration-700 overflow-hidden group/btn">
+                    <button className="relative px-8 md:px-20 py-6 md:py-10 bg-black border border-white/5 hover:border-cyan-500/50 transition-all active:scale-90 duration-700 overflow-hidden group/btn">
                     
                         <div
                             className="absolute inset-0 opacity-0 group-hover/btn:opacity-20 transition-all duration-1000 scale-125 group-hover/btn:scale-100 mix-blend-screen pointer-events-none"
@@ -68,7 +68,7 @@ const DownloadSection = () => (
                         />
 
                         <div className="relative z-10 flex flex-col items-center gap-2">
-                            <span className="text-4xl font-black italic uppercase text-white/90 tracking-tighter group-hover/btn:text-white transition-colors">
+                            <span className="text-2xl md:text-4xl font-black italic uppercase text-white/90 tracking-tighter group-hover/btn:text-white transition-colors">
                                 Download <span className="text-cyan-500">.exe</span>
                             </span>
                         </div>

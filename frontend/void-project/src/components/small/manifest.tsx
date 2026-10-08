@@ -20,16 +20,16 @@ const ManifestSection = () => (
     />
 
   
-    <div className="relative z-10 grid grid-cols-12 gap-10 p-16">
+    <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 p-6 md:p-16">
        
       
-       <div className="col-span-5 flex flex-col justify-between relative z-10">
+       <div className="md:col-span-5 flex flex-col justify-between relative z-10">
           <div className="flex items-center gap-3">
              <div className="w-10 h-[2px] bg-cyan-500 shadow-[0_0_10px_#22d3ee]" />
-             <span className="text-[10px] font-black uppercase tracking-[0.5em] text-cyan-400">Project: VOIDCORE</span>
+             <span className="text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.5em] text-cyan-400">Project: VOIDCORE</span>
           </div>
           
-          <h3 className="text-6xl font-black italic uppercase tracking-tighter text-white leading-[0.9] mt-8 drop-shadow-[0_0_30px_rgba(255,255,255,0.05)]">
+          <h3 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter text-white leading-[0.9] mt-8 drop-shadow-[0_0_30px_rgba(255,255,255,0.05)]">
              Singularity <span className="text-cyan-400 text-glow-cyan">Node</span>
           </h3>
           
@@ -39,7 +39,7 @@ const ManifestSection = () => (
        </div>
        
   
-       <div className="col-span-7 space-y-8 text-slate-300 font-medium tracking-wide relative z-10">
+       <div className="md:col-span-7 space-y-6 md:space-y-8 text-slate-300 font-medium tracking-wide relative z-10">
           <p className="border-l-2 border-cyan-500/30 pl-6 py-2 bg-gradient-to-r from-cyan-500/5 to-transparent">
              <span className="text-white font-bold">VOIDCORE</span> — это централизованная система управления Direct Memory Access (DMA), разработанная в лабораториях <span className="text-white font-bold">Loft Project Customs</span>. Это не просто лоадер; это ваша точка доступа в саму бездну кода.
           </p>
@@ -49,7 +49,7 @@ const ManifestSection = () => (
           </p>
           
        
-          <div className="h-[2px] w-1/2 bg-gradient-to-r from-cyan-500 to-transparent shadow-[0_0_15px_rgba(34,211,238,0.5)] mt-10" />
+          <div className="h-[2px] w-1/2 bg-gradient-to-r from-cyan-500 to-transparent shadow-[0_0_15px_rgba(34,211,238,0.5)] mt-6 md:mt-10" />
        </div>
     </div>
 

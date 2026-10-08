@@ -1,28 +1,41 @@
-import React, { useState } from 'react';
-import bgr2 from '../../assets/bgr3.jpeg'
-import { CheckoutPage } from './purchase';
 
+
+
+
+
+
+
+import { useEffect, useRef, useState } from 'react';
+import bgr3 from '../../assets/bgr3.jpeg';
+
+const useIsMobile = () => {
+    const [m, setM] = useState(() => window.matchMedia('(max-width: 767px)').matches);
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 767px)');
+        const h = (e: MediaQueryListEvent) => setM(e.matches);
+        mq.addEventListener('change', h);
+        return () => mq.removeEventListener('change', h);
+    }, []);
+    return m;
+};
 
 const CyberFrameNeon = () => (
     <div className="absolute inset-0 pointer-events-none z-0">
-
-        <div 
+        <div
             className="absolute inset-0 opacity-50 mix-blend-screen"
-            style={{ 
-                backgroundImage: `url(${bgr2})`,
+            style={{
+                backgroundImage: `url(${bgr3})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
-                
                 maskImage: 'radial-gradient(circle, transparent 30%, black 100%)',
-                WebkitMaskImage: 'radial-gradient(circle, transparent 30%, black 100%)'
-            }} 
+                WebkitMaskImage: 'radial-gradient(circle, transparent 30%, black 100%)',
+            }}
         />
 
-        
         {[0, 90, 180, 270].map((rotation) => (
             <div
                 key={rotation}
-                className="absolute w-32 h-32 opacity-80"
+                className="absolute w-16 h-16 md:w-32 md:h-32 opacity-80"
                 style={{
                     top: rotation < 180 ? 0 : 'auto',
                     bottom: rotation >= 180 ? 0 : 'auto',
@@ -31,36 +44,26 @@ const CyberFrameNeon = () => (
                     transform: `rotate(${rotation}deg)`,
                 }}
             >
-             
                 <div className="absolute top-0 left-0 w-full h-[3px] bg-cyan-500 shadow-[0_0_20px_#22d3ee,0_0_40px_rgba(34,211,238,0.5)] animate-pulse" />
-               
                 <div className="absolute top-0 left-0 h-full w-[3px] bg-cyan-500 shadow-[0_0_20px_#22d3ee,0_0_40px_rgba(34,211,238,0.5)] animate-pulse" />
-           
                 <div className="absolute top-[-4px] left-[-4px] w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_15px_#22d3ee]" />
             </div>
         ))}
 
-        
-
-        <div className="absolute top-2 left-1/2 -translate-x-1/2 text-[11px] font-black tracking-[0.8em] text-cyan-500/60 uppercase">
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 whitespace-nowrap text-[9px] md:text-[11px] font-black tracking-[0.3em] md:tracking-[0.8em] text-cyan-500/60 uppercase">
             Available Tiers System
             <div className="absolute left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_0_15px_#22d3ee] mt-1" />
         </div>
 
-        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[11px] font-black tracking-[0.8em] text-cyan-500/60 uppercase">
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 absolute left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_0_15px_#22d3ee] mt-1" />
-        </div>
-
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 absolute left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_0_15px_#22d3ee] mt-1" />
-
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 absolute left-0 right-0 h-[2px] bg-cyan-500 shadow-[0_0_15px_#22d3ee]" />
     </div>
 );
 
-
-
-
 const PriceCarousel = ({ user, openAuthModal, openPurchase }: { user: any, openAuthModal: () => void, openPurchase: (plan: any) => void }) => {
     const [index, setIndex] = useState(1);
+    const isMobile = useIsMobile();
+    const touchX = useRef<number | null>(null);
+
     const plans = [
         { id: 0, name: "Trial Access", price: "499₽", period: "24 HOURS", features: ["Full Access", "24/7 Support"] },
         { id: 1, name: "Standard Pro", price: "2499₽", period: "7 DAYS", features: ["Full Access", "Undetected", "Cloud Configs"] },
@@ -70,87 +73,83 @@ const PriceCarousel = ({ user, openAuthModal, openPurchase }: { user: any, openA
     const next = () => setIndex((index + 1) % plans.length);
     const prev = () => setIndex((index - 1 + plans.length) % plans.length);
 
-
-    const handlePurchaseClick = (plan: any) => {
-        if (!user) {
-           
-            openAuthModal();
-        } else {
-          
-            openPurchase(plan);
-        }
+    const onTouchStart = (e: React.TouchEvent) => { touchX.current = e.touches[0].clientX; };
+    const onTouchEnd = (e: React.TouchEvent) => {
+        if (touchX.current === null) return;
+        const dx = e.changedTouches[0].clientX - touchX.current;
+        touchX.current = null;
+        if (Math.abs(dx) > 50) dx < 0 ? next() : prev();
     };
 
-    return (
-        <section className="relative w-full h-[750px] flex items-center justify-center bg-[#07090d]/70 overflow-hidden border-y border-white/5 py-12">
+    const handlePurchaseClick = (plan: any) => {
+        if (!user) openAuthModal();
+        else openPurchase(plan);
+    };
 
+    const step = isMobile ? 340 : 380;
+
+    return (
+        <section
+            className="relative w-full h-[680px] md:h-[750px] flex items-center justify-center bg-[#07090d]/70 overflow-hidden border-y border-white/5 py-12"
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+        >
             <CyberFrameNeon />
 
-           
-            <div className="absolute left-10 top-1/2 -translate-y-1/2 z-20">
-                <div className="flex items-center gap-3">
-                   
-                    <div className="flex flex-col gap-3">
-                        {[...Array(12)].map((_, i) => <div key={i} className="h-[2px] w-6 bg-cyan-500 shadow-[0_0_10px_#22d3ee] animate-pulse" />)}
-                    </div>
+            <div className="hidden md:block absolute left-10 top-1/2 -translate-y-1/2 z-20">
+                <div className="flex flex-col gap-3">
+                    {[...Array(12)].map((_, i) => <div key={i} className="h-[2px] w-6 bg-cyan-500 shadow-[0_0_10px_#22d3ee] animate-pulse" />)}
+                </div>
+            </div>
+            <div className="hidden md:block absolute right-10 top-1/2 -translate-y-1/2 z-20">
+                <div className="flex flex-col gap-3 items-end">
+                    {[...Array(12)].map((_, i) => <div key={i} className="h-[2px] w-6 bg-cyan-500 shadow-[0_0_10px_#22d3ee] animate-pulse" />)}
                 </div>
             </div>
 
-            <div className="absolute right-10 top-1/2 -translate-y-1/2 z-20">
-                <div className="flex items-center gap-3 flex-row-reverse">
-                    
-                    <div className="flex flex-col gap-3 items-end">
-                        {[...Array(12)].map((_, i) => <div key={i} className="h-[2px] w-6 bg-cyan-500 shadow-[0_0_10px_#22d3ee] animate-pulse" />)}
-                    </div>
-                </div>
-            </div>
-
-        
             <div className="relative w-full max-w-6xl h-full flex items-center justify-center">
-
-              
                 <button
                     onClick={prev}
-                    className="absolute left-0 z-50 p-6 border border-cyan-500/30 bg-black/40 hover:border-cyan-500 hover:bg-cyan-500/10 text-cyan-400 transition-all active:scale-90"
+                    aria-label="Previous plan"
+                    className="absolute bottom-4 left-4 md:bottom-auto md:left-0 z-50 w-12 h-12 md:w-auto md:h-auto md:p-6 border border-cyan-500/30 bg-black/40 hover:border-cyan-500 hover:bg-cyan-500/10 text-cyan-400 transition-all active:scale-90"
                 >
-                    <span className="text-3xl font-black">{'<'}</span>
+                    <span className="text-2xl md:text-3xl font-black">{'<'}</span>
                 </button>
 
-           
                 <div className="relative flex items-center justify-center w-full h-full">
                     {plans.map((plan, i) => {
                         let offset = i - index;
                         if (index === 0 && i === plans.length - 1) offset = -1;
                         if (index === plans.length - 1 && i === 0) offset = 1;
                         const isActive = i === index;
+                        const hiddenOnMobile = isMobile && !isActive;
 
                         return (
                             <div
                                 key={plan.id}
-                                className={`absolute w-80 p-10 border transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex flex-col justify-between ${isActive
-                                    ? 'z-40 scale-110 opacity-100 border-cyan-500 bg-[#0d1117] shadow-[0_0_60px_-15px_rgba(34,211,238,0.4)]'
-                                    : 'z-10 scale-90 opacity-70 border-white/10 bg-black'
-                                    }`}
-                                style={{ transform: `translateX(${offset * 380}px) rotateY(${offset * -20}deg)` }}
+                                className={`absolute w-[min(20rem,80vw)] p-6 md:p-10 border transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] flex flex-col justify-between ${isActive
+                                    ? 'z-40 scale-100 md:scale-110 opacity-100 border-cyan-500 bg-[#0d1117] shadow-[0_0_60px_-15px_rgba(34,211,238,0.4)]'
+                                    : 'z-10 scale-90 border-white/10 bg-black'
+                                    } ${hiddenOnMobile ? 'opacity-0 pointer-events-none' : isActive ? '' : 'opacity-70'}`}
+                                style={{ transform: `translateX(${offset * step}px) rotateY(${offset * -20}deg)` }}
                             >
-                            
                                 <div>
                                     <span className="text-[10px] font-black text-cyan-400 tracking-widest">{plan.period}</span>
-                                    <h3 className="text-3xl font-black italic uppercase text-white mt-4 mb-6 leading-none">{plan.name}</h3>
+                                    <h3 className="text-2xl md:text-3xl font-black italic uppercase text-white mt-4 mb-6 leading-none">{plan.name}</h3>
                                     <ul className="space-y-2">
                                         {plan.features.map((f, idx) => (
-                                            <li key={idx} className="text-[9px] font-bold text-slate-500 uppercase flex items-center gap-2">
+                                            <li key={idx} className="text-[10px] md:text-[9px] font-bold text-slate-500 uppercase flex items-center gap-2">
                                                 <div className="w-1 h-1 bg-cyan-500" /> {f}
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
                                 <div className="mt-8 pt-6 border-t border-white/5">
-                                    <div className="text-4xl font-black italic text-white mb-6">{plan.price}</div>
-                                    <button 
-                                    onClick={() => handlePurchaseClick(plan)}
-                                    className={`w-full py-4 text-[10px] transition-all active:scale-90 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all font-black uppercase tracking-[0.4em] transition-all ${isActive ? 'bg-cyan-500 text-black' : 'bg-white/5 text-white/20'
-                                        }`}>
+                                    <div className="text-3xl md:text-4xl font-black italic text-white mb-6">{plan.price}</div>
+                                    <button
+                                        onClick={() => handlePurchaseClick(plan)}
+                                        className={`w-full py-4 text-[10px] transition-all active:scale-90 hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] ${isActive ? 'bg-cyan-500 text-black' : 'bg-white/5 text-white/20'}`}
+                                    >
                                         Purchase
                                     </button>
                                 </div>
@@ -159,14 +158,13 @@ const PriceCarousel = ({ user, openAuthModal, openPurchase }: { user: any, openA
                     })}
                 </div>
 
-         
                 <button
                     onClick={next}
-                    className="absolute right-0 z-50 p-6 border border-cyan-500/30 bg-black/40 hover:border-cyan-500 hover:bg-cyan-500/10 text-cyan-400 transition-all active:scale-90"
+                    aria-label="Next plan"
+                    className="absolute bottom-4 right-4 md:bottom-auto md:right-0 z-50 w-12 h-12 md:w-auto md:h-auto md:p-6 border border-cyan-500/30 bg-black/40 hover:border-cyan-500 hover:bg-cyan-500/10 text-cyan-400 transition-all active:scale-90"
                 >
-                    <span className="text-3xl font-black">{'>'}</span>
+                    <span className="text-2xl md:text-3xl font-black">{'>'}</span>
                 </button>
-
             </div>
         </section>
     );
